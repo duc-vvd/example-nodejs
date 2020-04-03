@@ -15,6 +15,10 @@ app.get("/api", function(req, res) {
 
 })
 
+app.get("/user/:id", function(req, res) {
+    res.send(`<h1>User: ${req.params.id}`);
+})
+
 app.listen(port, function() {
     console.log("Sever is listening on PORT:" + port);
 })
