@@ -1,6 +1,10 @@
 var express = require("express");
 var cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
 var app = express();
+
+var urlencodedParser = bodyParser.urlencoded({extended: false});
+var jsonParser = bodyParser.json();
 
 var port = 3000;
 
@@ -42,7 +46,21 @@ app.get("/api", function (req, res) {
 // })
 
 app.get("/user/:id", function (req, res) {
-    res.render("user", { ID: req.params.id })
+    // req.query.qstr
+    console.log(req.body);
+    res.render("user", { ID: req.params.id, queryString: req.query.qstr })
+})
+
+app.post("/login", urlencodedParser, function(req, res) {
+    res.send("Welcome, " + req.body.username);
+    console.log(req.body.username);
+    console.log(req.body.password);
+});
+
+app.post("/loginjson", jsonParser, function(req, res) {
+    res.send("OK");
+    console.log(req.body.firstName);
+    console.log(req.body.lastName);
 })
 
 app.listen(port, function () {
